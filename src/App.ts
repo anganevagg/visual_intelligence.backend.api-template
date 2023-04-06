@@ -6,9 +6,11 @@ import { IRouter } from './interfaces/Router.interfaces';
 class App {
   readonly server: express.Application = express();
   readonly port: number = Number.parseInt(PORT || '8080');
-  listen(routes: IRouter[]) {
-    this.addMiddlewares();
+  constructor(routes: IRouter[]) {
     this.addRoutes(routes);
+  }
+  listen() {
+    this.addMiddlewares();
     this.server.listen(this.port, () => {
       console.log(`http://localhost:${this.port}`);
     });
