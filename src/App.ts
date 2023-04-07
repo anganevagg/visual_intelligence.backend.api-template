@@ -2,6 +2,7 @@ import { PORT } from './config';
 import express from 'express';
 import { IndexRouter } from './routes/index.routes';
 import { IRouter } from './interfaces/Router.interfaces';
+import ErrorHandler from './middlewares/ErrorHandler';
 
 class App {
   readonly server: express.Application = express();
@@ -11,6 +12,7 @@ class App {
   }
   listen() {
     this.addMiddlewares();
+    this.addErrorHandler();
     this.server.listen(this.port, () => {
       console.log(`http://localhost:${this.port}`);
     });
@@ -22,6 +24,9 @@ class App {
     routes.forEach((route: IRouter) => {
       this.server.use(route.path, indexRouter.router);
     });
+  }
+  private addErrorHandler() {
+    this.server.use(ErrorHandler);
   }
 }
 
