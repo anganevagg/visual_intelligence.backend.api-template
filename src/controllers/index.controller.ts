@@ -7,6 +7,10 @@ export class IndexController implements Controller {
     res: Response,
     next: NextFunction
   ) => {
-    res.sendStatus(200);
+    try {
+      res.sendStatus(200);
+    } catch (err) {
+      next(err);
+    }
   };
 }
